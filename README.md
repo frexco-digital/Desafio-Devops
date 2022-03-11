@@ -3,7 +3,7 @@
 ## Instruções
 
 Considere que você foi contratado para subir uma aplicação (deploy) Api em Django + PSQL.
-O foco do desafio é no deploy e boas praticas Devops, logo, recomendamos que use a aplicação Api que disponibilizamos nesse repositório, para poder se concentrar na estrutura da aplicação.
+O foco do desafio é no deploy e boas praticas Devops, logo, recomendamos que faça um fork da aplicação Api que disponibilizamos nesse repositório, para poder se concentrar na estrutura da aplicação.
 
 ## Requisitos Principais
 
