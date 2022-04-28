@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./web/
+    env_file:
+      - .env
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: "django-devops"
+    ports:
+      - 8002:8000
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    container_name: "postgres"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "pg_isready --host=localhost --username=postgres"
+
+volumes:
+  db-data:

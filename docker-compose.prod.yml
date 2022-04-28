@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: ./nginx/
+    container_name: "nginx"
+    ports:
+      - 80:80
+    depends_on:
+      - app
+    restart: "on-failure"
+
+  app:
+    build:
+      context: ./web/
+    env_file:
+      - .env
+    command: gunicorn docker_django.wsgi:application --bind 0.0.0.0:8000
+    container_name: "django-devops"
+    ports:
+      - 8002:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "on-failure"
+
+  db:
+    image: postgres
+    container_name: "postgres"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      timeout: 5s
+      interval: 5s
+      retries: 5
+      test:
+        - "CMD-SHELL"
+        - "pg_isready --host=localhost --username=postgres"
+
+volumes:
+  db-data:
