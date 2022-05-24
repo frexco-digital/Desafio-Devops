@@ -1,4 +1,6 @@
-Django==2.1.7
+Django==4.0.4
 gunicorn==19.9.0
-psycopg2==2.7.7
 redis==3.2.1
+psycopg2==2.8.6
+sqlparse==0.4.2
+asgiref==3.5.0
